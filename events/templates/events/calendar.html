@@ -1,0 +1,21 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+<center>
+    {{year}}<br/>
+    
+    {{month}}<br/>
+    
+    {{month_number}}<br/>
+    
+    Time of request is {{time}} {{current_day}}:{{current_month}}:{{current_year}}
+    
+    {{htmlcal|safe}}<br/>
+
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+    
+    </center>
+{%endblock%}

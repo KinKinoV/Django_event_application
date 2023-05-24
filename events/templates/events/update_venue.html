@@ -1,0 +1,22 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+{%if user.is_authenticated%}
+    <h1>Update Venue</h1>
+    {{venue}}
+    <form action="" method=POST enctype='multipart/form-data'>
+        {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Update" class="btn btn-secondary" >
+    {%else%}
+    <h1> You must to be logged in</h1>
+    <a a class="nav-link active" aria-current="page" href="{%url 'login'%}"> Login Here</a>
+    {%endif%}  
+{%endblock%}
+<center>
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+    
+</center>

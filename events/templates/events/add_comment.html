@@ -1,0 +1,27 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+{%if user.is_authenticated%}
+<br/>
+    <div class = "shadow p-4 mb-5 bg-body rounded">
+    <h1>Add Comment</h1>
+<br/>
+<br/>
+
+        <form method = "POST">
+            {%csrf_token%}
+            {{form.as_p}}
+
+            <br/><br/>
+            <input type = 'submit' value = 'Submit' class = 'btn btn-success'>
+        </form> 
+    </div>
+{%endif%}
+
+    <center>
+        <br/>
+        <br/>
+        <br/>
+        Copyright (c) {{current_year}}
+    </center>
+{%endblock%}

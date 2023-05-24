@@ -1,0 +1,46 @@
+{%extends 'events/base.html'%}
+{%load static%}
+{%block content%}
+<form class="d-flex" method=POST action="{%url 'search-user'%}">
+    {%csrf_token%}
+    <input class="form-control me-2" type="search" placeholder="Search User" aria-label="Search" name='searched_user'><button class="btn btn-outline-success" type="submit">Search</button>
+  </form><br/>
+<div class="card"> 
+    <h2 class="card-header">
+        {%if searched_user%}
+        You Searched for {{searched_user}}
+        {%else%}
+        Your request is empty
+        {%endif%} 
+    </h2> 
+</div>
+<br/>
+{%for user in users%}
+<div class="card">
+    <h5 class="card-header"><a href="{%url 'show-page' user.id%}">{{user}}</a></h5>
+    <div class="card-body">
+      <h5 class="card-title"> Email: {{user.email}}</h5>
+      <p class="card-text">
+        {%if user.userprofile.avatar%}
+        <img src="{{user.userprofile.avatar.url}}" alt = "CSS" width = "200" height = "200"><br/>
+        {%else%}
+        <img src="{%static '\user_profile_stuff\images\default-avatar-profile.jpg'%}" alt = "CSS" width = "200" height = "200"><br/>
+        {%endif%}
+        <strong>First name: </strong> {{user.first_name}}<br/>
+        <strong>Second name: </strong>{{user.last_name}}<br/>
+
+      </p>
+    </div>
+  </div>
+<ul>  
+</ul>
+{%endfor%}
+
+
+<center>
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+</center>
+{%endblock%}

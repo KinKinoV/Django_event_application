@@ -1,0 +1,33 @@
+{%extends 'events/base.html'%}
+{%load static%}
+{%block content%}
+
+{%for user in users_profiles%}
+<div class="card mb-3" style="max-width: 100%;">
+    <h5 class="card-header"><a href="{%url 'show-page' user.id%}">{{user}}</a></h5>
+    <div class="card-body">
+      <h5 class="card-title"> Email: {{user.email}}</h5>
+      <p class="card-text">
+        {%if user.userprofile.avatar%}
+        <img src="{{user.userprofile.avatar.url}}" alt = "CSS" width = "200" height = "200"><br/>
+        {%else%}
+        <img src="{%static '\user_profile_stuff\images\default-avatar-profile.jpg'%}" alt = "CSS" width = "200" height = "200"><br/>
+        {%endif%}
+        <strong>First name: </strong> {{user.first_name}}<br/>
+        <strong>Second name: </strong>{{user.last_name}}<br/>
+
+      </p>
+    </div>
+  </div>
+<ul>  
+</ul>
+{%endfor%}
+
+
+<center>
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+</center>
+{%endblock%}

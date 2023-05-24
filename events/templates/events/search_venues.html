@@ -1,0 +1,51 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+
+
+    {%if searched_venues %}
+    <h1> You Searched for {{searched_venues}} </h1>
+    <br/>
+    {%for venue in venues%}
+    <div class="card">
+        <h5 class="card-header">Venue</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{venue}}</h5>
+          <p class="card-text">
+            <br/>
+            {%if venue.address%}
+            Address: {{venue.address}}<br/>
+            {%endif%}
+            {%if venue.zip_code%}
+            Zip code: {{venue.zip_code}}<br/>
+            {%endif%}
+            {%if venue.phone%}
+            Phone: {{venue.phone}}<br/>
+            {%endif%}
+            {%if venue.web_address%}
+            Web-address: <a href='{{venue.web_address}}'>{{venue.web_address}}</a><br/>
+            {%endif%}
+            {%if venue.%}
+            Email Address: {{venue.email_address}}<br/>
+            {%endif%}
+            {%if venue_owner%}
+            Owner: {{venue_owner}}</br>
+            {%endif%}
+            {%if venue_owner.email%}
+            Owner Email: {{venue_owner.email}}<br/>
+            {%endif%}
+          </p>
+    </div>
+    {%endfor%}
+
+    {%else%}
+    <h1> Your search request is empty </h1>
+    {%endif%}
+    <center>
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+    
+    </center>
+{%endblock%}

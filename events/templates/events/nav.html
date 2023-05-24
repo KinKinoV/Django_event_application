@@ -1,0 +1,90 @@
+
+
+<nav class="navbar bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{%url 'home'%}">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Events
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'event-list'%}">Events</a></li>
+            {%if user.is_authenticated%}
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'add-event'%}">Add Event</a></li>
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'my-events'%}"> My Events</a></li>
+            <li><form class="d-flex" method=POST action="{%url 'search-events'%}">
+              {%csrf_token%}
+              <input class="form-control me-2" type="search" placeholder="Search Event" aria-label="Search" name='searched_events'>
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form></li>
+            {%if user.is_superuser%}
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'admin-approval'%}">Admin Approval Panel</a></li>
+            {%endif%}
+            {%endif%}
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Venues
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'list-venues'%}">All Venues</a></li>
+            {%if user.is_authenticated%}
+            <li><a class="dropdown-item" aria-current="page" href="{%url 'add-venue'%}">Add Venue</a></li>
+            <li><form class="d-flex" method=POST action="{%url 'search-venues'%}">
+              {%csrf_token%}
+              <input class="form-control me-2" type="search" placeholder="Search Venues" aria-label="Search" name='searched_venues'>
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form></li>
+            {%endif%}
+          </ul>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Download
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" aria-current="page" href="{%url 'venue-text'%}">Venue text download</a></li>
+              <li><a class="dropdown-item" aria-current="page" href="{%url 'venue-csv'%}">Venue csv download</a></li>
+              <li><a class="dropdown-item" aria-current="page" href="{%url 'venue-pdf'%}">Venue pdf download</a></li>
+            </ul>
+        
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                User Activity
+              </a>
+              <ul class="dropdown-menu">
+                {%if user.is_authenticated%}
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'logout'%}">Logout</a></li>
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'show-my-page'%}">Show my page</a></li>
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'users-profiles'%}">Show Users</a></li>
+                {%if user.userprofile.id%}
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'my-profile-edit' user.userprofile.id%}">Edit my profile</a></li>
+                {%else%}
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'create-profile-page'%}">Create profile</a></li>
+                {%endif%}
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'my-settings-edit'%}">Edit my settings</a></li>
+                <li><form class="d-flex" method=POST action="{%url 'search-user'%}">
+                  {%csrf_token%}
+                  <input class="form-control me-2" type="search" placeholder="Search User" aria-label="Search" name='searched_user'><button class="btn btn-outline-success" type="submit">Search</button>
+                </form><br/></li>
+                {%else%}
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'login'%}">Login</a></li>
+                <li><a class="dropdown-item" aria-current="page" href="{%url 'register_user'%}">Register</a></li>
+               {%endif%}
+              </ul>
+      </ul>
+
+    </div>
+  </div>
+</nav>

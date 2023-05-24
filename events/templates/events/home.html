@@ -1,0 +1,56 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+<center>
+    {{time_stuff.year}}<br/>
+    
+    {{time_stuff.month}}<br/>
+    
+    {{time_stuff.month_number}}<br/>
+    
+    Time of request is {{time_stuff.time}} {{time_stuff.current_day}}:{{time_stuff.current_month}}:{{time_stuff.current_year}}
+    
+    {{time_stuff.htmlcal|safe}}<br/>
+    <br/>
+    <br/>
+    {%if user.is_authenticated%}
+    {%if event_list%}
+    Events that you have this month:<br/>
+    {%for event in event_list%}
+    <div class="card">
+        <h5 class="card-header"><a href={%url 'show-event' event.id%}>{{event}}</a></h5>
+        <div class="card-body">
+          <h5 class="card-title"> Venue : {{event.venue}}</h5>
+          <p class="card-text">
+            <strong>Date:</strong> {{event.event_date}}<br/>
+            <strong>Venue web address:</strong> {{event.venue.web_address}}<br/>
+            <strong>Manager:</strong> {{event.manager}}<br/>
+            <strong>Description:</strong> {{event.description}}<br/>
+            <strong>Attendees:</strong> 
+            {%for user in event.attendees.all%} 
+                {{user}},
+            {%endfor%}<br/>
+    
+          </p>
+        </div>
+        <div class ="card-footer text-muted">
+          {%if user.is_authenticated%}
+          {%if user == event.manager or user.is_superuser%}<!--or user.is_superuser-->
+            <a href = "{%url 'update-event' event.id%}" class="btn btn-outline-success btn-sm"> Update Event </a>
+            <a href = "{%url 'delete-event' event.id%}" class="btn btn-outline-danger btn-sm"> Delete Event </a>
+          {%endif%}
+          {%endif%}
+        </div>
+    </div>
+    <ul> 
+        
+    </ul>
+    {%endfor%}
+    {%endif%}
+    {%endif%}
+    <br/>
+
+    Copyright (c) {{time_stuff.current_year}}
+    
+    </center>
+{%endblock%}

@@ -1,0 +1,36 @@
+{%extends 'events/base.html'%}
+{%load static%}
+{%block content%}
+    <h1>My profile</h1>
+  
+<div class="card mb-3">
+  <h5 class="card-header">{{user}}</h5>
+  <div class="row g-0">
+    <div class="col-md-4">
+      {%if user.userprofile.avatar%}
+      <img src="{{user.userprofile.avatar.url}}" class="img-fluid rounded-start" alt = "CSS" width = "200" height = "200"><br/>
+      {%else%}
+      <img src="{%static '\user_profile_stuff\images\default-avatar-profile.jpg'%}" class="img-fluid rounded-start" alt = "CSS" width = "200" height = "200"><br/>
+      {%endif%} 
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+          <h5 class="card-title"> Email: {{user.email}}</h5>
+          <p class="card-text"><strong>First name: </strong> {{user.first_name}}</p>
+          <p class="card-text"><strong>Second name: </strong>{{user.last_name}}</p>
+          <p class="card-text"><strong> Bio:</strong> {{user.userprofile.bio}}
+      </div>
+    </div>
+  </div>
+</div>
+<ul>  
+</ul>
+
+
+<center>
+    <br/>
+    <br/>
+    <br/>
+    Copyright (c) {{current_year}}
+</center>
+{%endblock%}
