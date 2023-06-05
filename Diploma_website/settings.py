@@ -11,8 +11,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
 import os
 from re import L
+
+#Initializing .env values
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,15 +52,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'events',
     'members',
-    'chat',
     'django.contrib.sites',
     'multiselectfield',
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'defender', 
-      
+    'defender',
 ]
 
 SITE_ID = 1
@@ -96,8 +100,12 @@ ASGI_APPLICATION = "Diploma_website.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'demo',
+        'USER': 'demo',
+        'HOST': 'localhost',
+        'PORT': 5432,
+        'PASSWORD':'demo'
     }
 }
 
@@ -147,11 +155,11 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
-
+DEFENDER_REDIS_URL = "redis://localhost:8567/0"
 
 DEFAULT_AUTHENTICATION_CLASSES='Diploma_website/Diploma_website/basic_auth.py.BasicAuthenticationDefender'
 
