@@ -101,11 +101,11 @@ ASGI_APPLICATION = "Diploma_website.asgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'demo',
-        'USER': 'demo',
-        'HOST': 'localhost',
-        'PORT': 5432,
-        'PASSWORD':'demo'
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'PASSWORD': env('DB_PASSWORD')
     }
 }
 
@@ -159,7 +159,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
-DEFENDER_REDIS_URL = "redis://localhost:8567/0"
+DEFENDER_REDIS_URL = f"redis://{env('REDIS_HOST')}:{env('REDIS_PORT')}/0"
 
 DEFAULT_AUTHENTICATION_CLASSES='Diploma_website/Diploma_website/basic_auth.py.BasicAuthenticationDefender'
 
