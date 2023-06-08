@@ -1,0 +1,13 @@
+{
+    "SECRET_KEY": "django-insecure d5s7uopdeif987s9dt9AF^DC*(&0_+_()CI*UD",
+    "DB_NAME": "db",
+    "DB_HOST": "admin",
+    "DB_PASSWORD": "admin",
+    "DB_USER": "admin",
+    "DB_PORT": "5432",
+    "REDIS_HOST": "localhost",
+    "REDIS_PORT": "6379",
+    "AZ_STORAGE_KEY": "ADFYUO&^*(*)DAW(**ADSHJODI)*A(W&ODW",
+    "AZ_STORAGE_NAME": "azstorage",
+    "ALLOWED_HOSTS": ["localhost"]
+}
