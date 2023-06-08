@@ -11,34 +11,31 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import environ
 import os
-from re import L
-
-#Initializing .env values
-env = environ.Env()
-environ.Env.read_env()
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+#Initializing .env values
+if DEBUG:
+    with open(os.path.join(BASE_DIR, 'config.json')) as config_file:
+        configs = json.load(config_file)
+else:
+    with open('/etc/config.json') as config_file:
+        configs = json.load(config_file)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = configs['SECRET_KEY']
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    '192.168.31.103',
-    'localhost',
-    'www.mydiplomaapp.com',
-    '127.0.0.1',
-    '192.168.31.104',
-]
+ALLOWED_HOSTS = configs['ALLOWED_HOSTS']
 
 
 # Application definition
@@ -101,11 +98,11 @@ ASGI_APPLICATION = "Diploma_website.asgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-        'PASSWORD': env('DB_PASSWORD')
+        'NAME': configs['DB_NAME'],
+        'USER': configs['DB_USER'],
+        'HOST': configs['DB_HOST'],
+        'PORT': configs['DB_PORT'],
+        'PASSWORD': configs['DB_PASSWORD']
     }
 }
 
@@ -144,11 +141,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
-MEDIA_URL='/media/'
+DEFAULT_FILE_STORAGE = 'Diploma_website.custom_azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'Diploma_website.custom_azure.AzureStaticStorage'
 
+STATIC_LOCATION = "static"
+MEDIA_LOCATION = "media"
+
+AZURE_CUSTOM_DOMAIN = f'{configs["AZ_STORAGE_NAME"]}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 
 #STATICFILES_DIRS = (os.path.join(BASE_DIR,'static/')),
 # Default primary key field type
@@ -160,7 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
-DEFENDER_REDIS_URL = f"redis://{env('REDIS_HOST')}:{env('REDIS_PORT')}/0"
+DEFENDER_REDIS_URL = f"redis://{configs['REDIS_HOST']}:{configs['REDIS_PORT']}/0"
 
 DEFAULT_AUTHENTICATION_CLASSES='Diploma_website/Diploma_website/basic_auth.py.BasicAuthenticationDefender'
 
