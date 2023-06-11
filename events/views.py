@@ -28,6 +28,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.views.generic import DetailView,CreateView
 
+from os import uname
 def venue_pdf(request):
 #create bytestream buffer
     buf=io.BytesIO()
@@ -398,15 +399,16 @@ def timestuff(year,month):
         })
 
 def home(request,year=datetime.now().year,month=datetime.now().strftime('%B')):
+    vmhost = uname()[1]
     if request.user.is_authenticated:
         username=User.objects.get(pk=request.user.id)
         #Query the Events Model for Dates
         n=Namespace(**timestuff(year,month))
         cur_month=n.month_number
         event_list = Event.objects.filter(attendees=username).filter(event_date__year=year).filter(event_date__month=cur_month)
-        return render(request, 'events/home.html',{'time_stuff':timestuff(year,month),'event_list':event_list,})
+        return render(request, 'events/home.html',{'time_stuff':timestuff(year,month),'event_list':event_list, 'vmhost':vmhost,})
     else:
-        return render(request, 'events/home.html',{'time_stuff':timestuff(year,month),})
+        return render(request, 'events/home.html',{'time_stuff':timestuff(year,month),'vmhost':vmhost,})
 
 def Calendar(request,year=datetime.now().year,month=datetime.now().strftime('%B')):
     return render (request,'events/calendar.html',timestuff(year,month))
