@@ -161,7 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
-DEFENDER_REDIS_URL = f"redis://{configs['REDIS_PASS']}@{configs['REDIS_HOST']}:{configs['REDIS_PORT']}/0"
+DEFENDER_REDIS_URL = f"redis://:{configs['REDIS_PASS']}@{configs['REDIS_HOST']}:{configs['REDIS_PORT']}/0"
 
 DEFAULT_AUTHENTICATION_CLASSES='Diploma_website/Diploma_website/basic_auth.py.BasicAuthenticationDefender'
 
