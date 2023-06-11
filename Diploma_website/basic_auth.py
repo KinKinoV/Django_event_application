@@ -37,7 +37,7 @@ class BasicAuthenticationDefender(BasicAuthentication):
                      "".format(
                         failure_limit=config.FAILURE_LIMIT,
                         cooloff_time_seconds=config.LOCKOUT_COOLOFF_TIME[
-                           defender_utils.get_lockout_cooloff_time(username=self.get_username_from_request(request))
+                           utils.get_lockout_cooloff_time(username=self.get_username_from_request(request))
                         ]
                      )
             raise exceptions.AuthenticationFailed(_(detail))
