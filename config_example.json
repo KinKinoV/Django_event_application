@@ -7,6 +7,7 @@
     "DB_PORT": "5432",
     "REDIS_HOST": "localhost",
     "REDIS_PORT": "6379",
+    "REDIS_PASS": "foobar",
     "AZ_STORAGE_KEY": "ADFYUO&^*(*)DAW(**ADSHJODI)*A(W&ODW",
     "AZ_STORAGE_NAME": "azstorage",
     "ALLOWED_HOSTS": ["localhost"]
