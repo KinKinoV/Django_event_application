@@ -10,5 +10,6 @@
     "REDIS_PASS": "foobar",
     "AZ_STORAGE_KEY": "ADFYUO&^*(*)DAW(**ADSHJODI)*A(W&ODW",
     "AZ_STORAGE_NAME": "azstorage",
+    "PATH_TO_LOGS": "/mnt/logs",
     "ALLOWED_HOSTS": ["localhost"]
 }
