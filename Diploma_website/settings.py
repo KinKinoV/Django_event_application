@@ -175,19 +175,46 @@ LOGOUT_REDIRECT_URL='home'
 LOGGING ={
     'version':1,
     'disable_existing_loggers':False,
+    'formatters': {
+        "verbose": {
+            "format": f"[{os.uname()[1]}" + "--{levelname}]-[{asctime}] {module}(P:{process:d}, T:{thread:d}): {message}",
+            "style": "{"
+        },
+        "simple": {
+            "format": "[{levelname}]-[{asctime}]: {message}",
+            "style": "{"
+        }
+    },
     'handlers':{
         'file':{
-            'level':'DEBUG',
+            'level':'INFO',
             'class':'logging.FileHandler',
-            'filename':'debug.log'
+            'formatter': 'simple',
+            'filename': f'{configs["PATH_TO_LOGS"]}/{os.uname()[1]}.log'
         },
+        "error_logs": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            'filename': f'{configs["PATH_TO_LOGS"]}/errors.log',
+            "formatter": "verbose"
+        }
     },
     'loggers':{
         'django':{
             'handlers':['file'],
-            'level':'DEBUG',
-            'progate':True,
+            'level':'INFO',
+            'propagate':True,
         },
+        "django.request": {
+            "handlers": ["error_logs"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security.csrf": {
+            "handlers": ["error_logs"],
+            "level": "WARNING",
+            "propagate": False
+        }
     },
     
 }
